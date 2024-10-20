@@ -162,7 +162,6 @@
     <ClInclude Include="AEXModule\h\Process.h" />
     <ClInclude Include="AEXModule\h\Text.h" />
     <ClInclude Include="AEXModule\h\Thread.h" />
-    <ClInclude Include="PageHook.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AEXModule\cpp\AEXStore.cpp" />

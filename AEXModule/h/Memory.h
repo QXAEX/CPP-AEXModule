@@ -446,7 +446,6 @@ namespace Memory {
 		INT3_HOOKJUMP,//int3HOOK_JUMP模式
 		HARDWARE_BREAKPOINT,//硬件断点(谨记,此模式至多4个地址,超过则会新增失败)
 		HAEDWARE_HOOKJUMP,//硬件HOOK_JUMP模式
-		PAGE,//页面异常断点
 	};
 	typedef struct _VEHHOOK_PARAM{
 		DWORD code;//异常代码标识(用于在回调中区分你的hook地址)
@@ -469,8 +468,6 @@ namespace Memory {
 		PVOID newAddress;//新地址(仅在HOOK_JUMP模式有效)
 		Byteset newAddrData;//新地址数据(仅在HOOK_JUMP模式有效)
 		DWORD newAddrSize;//新地址大小(仅在HOOK_JUMP模式有效)
-		DWORD oldProtection;//原保护模式(仅在PAGE模式有效)
-		DWORD newProtection;//新保护模式(仅在PAGE模式有效)
 	} VEHHOOK_HANDLE, * PVEHHOOK_HANDLE;
 	class VEHHook : private API, public R3 {
 	private:

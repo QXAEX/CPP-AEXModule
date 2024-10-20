@@ -54,9 +54,6 @@
     <ClInclude Include="AEXModule\h\Thread.h">
       <Filter>头文件\AEXModule</Filter>
     </ClInclude>
-    <ClInclude Include="PageHook.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AEXModule\cpp\Text.cpp">

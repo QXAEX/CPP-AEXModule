@@ -1,7 +1,11 @@
 #include "../h/Memory.h"
 #include <winternl.h>
 #include <thread>
-
+#ifdef _WIN64
+#define GetIntAddress(Ptr) ((uintptr_t)Ptr & 0xFFFFFFFFFFFFF000)
+#else
+#define GetIntAddress(Ptr) ((uintptr_t)Ptr & 0xFFFFF000)
+#endif
 Memory::API::API()
 {
     HMODULE ntdll = LoadLibraryA("ntdll.dll");
@@ -666,7 +670,6 @@ DWORD Memory::VEHHook::AddAddress(VEHHOOK_PARAM param)
                 this->hookJump((size_t)(handle.newAddress) + param.data.size(), (size_t)(handle.address) + handle.size);
                 if (hardwareBreakpointCount == 4) break;
                 hsnap = this->API::CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, (HANDLE)GetCurrentProcessId());
-                THREADENTRY32 te32 = { 0 };
                 te32.dwSize = sizeof(THREADENTRY32);
                 state = this->API::Thread32First(hsnap, &te32);
                 if (state == TRUE) hardwareBreakpointCount++;
@@ -709,8 +712,6 @@ DWORD Memory::VEHHook::AddAddress(VEHHOOK_PARAM param)
                 };
                 this->API::ZwClose(hsnap);
                 break;
-         /*   case VEH_TYPE::PAGE:
-                    break;*/
         }
         VehInfos.push_back(handle);
     }
@@ -932,6 +933,7 @@ size_t Memory::VEHHook::GetModuleBase(std::string moduleName) const
 {
     return this->R3::GetModuleBase(moduleName);
 }
+
 Memory::PVEHHOOK_HANDLE Memory::VEHHook::GetHandle(PVOID address)
 {
     for (int i = 0, size = VehInfos.size(); i < size; i++) {
@@ -941,5 +943,3 @@ Memory::PVEHHOOK_HANDLE Memory::VEHHook::GetHandle(PVOID address)
     }
     return PVEHHOOK_HANDLE();
 }
-;
-

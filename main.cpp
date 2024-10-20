@@ -5,7 +5,6 @@
 #include <iostream>
 #include <thread>
 #include <windows.h>
-#include "PageHook.hpp"
 #ifdef _WIN64
 #define GetPage(Ptr) ((uintptr_t)Ptr & 0xFFFFFFFFFFFFF000)
 #else
